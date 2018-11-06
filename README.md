@@ -25,7 +25,8 @@ The following cron scripts (tested on Linux) are provided to read the logging ta
 4. The provided cron scripts send one alert per log entry, all at once. If your triggers log many rows, then you will get many alerts with the default scripts. There are several ways to customize the alerting behavior:
   * add a counter in the inner loop and exit after say 10 alerts
   * add a LIMIT 10 statement to just process up to 10 alerts per run
-  * change the SET alerted='Y' WHERE id= to note= or alerted='N' to mark multiple items as already alerted.
+  * change the SET alerted='Y' WHERE id= to note= or alerted='N' to mark multiple items as already alerted
+  * do a SELECT id, ts, user, query, note, COUNT(*) cnt FROM debug_log WHERE alerted='N' GROUP BY note to send one alert per note string with a count per note string.
 
 ## License
 
