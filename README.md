@@ -4,7 +4,7 @@ mysql-trigger-logger.sql demonstrates how to use MySQL triggers to log the times
 ## Getting Started
 
 1. Download mysql-trigger-logger.sql
-2. Editthe trigger definitions logic for your use case (you should not need to update the stored procedure)
+2. Edit the trigger definitions logic for your use case (you should not need to update the stored procedure)
 3. Test in your development environment first
 4. Ask your DBA to install it in other environments. Note that adding triggers will interfere with trigger-based schema change tools like pt-osc.
 
