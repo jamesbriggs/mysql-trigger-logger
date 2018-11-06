@@ -13,9 +13,9 @@
 
 The following cron scripts (tested on Linux) are provided to read the logging table, debug_log, for new alerts (`alerted='N'`), send the alert email, then toggle that row to `alerted='Y'`:
 
-1. notify-trigger-logger.pl (written in Perl)
-2. notify-trigger-logger.py (written in Python)
-3. notify-trigger-logger.sh (written in bash. avoid embedded tabs in the query and note columns for best results.)
+1. `notify-trigger-logger.pl` (written in Perl)
+2. `notify-trigger-logger.py` (written in Python)
+3. `notify-trigger-logger.sh` (written in bash. avoid embedded tabs in the query and note columns for best results.)
 
 There are minimal dependencies:
 
@@ -28,7 +28,7 @@ There are minimal dependencies:
 
 1. No temporary files are created, and no files are read or written.
 2. The scripts can be run as a non-privileged OS user and made read-only to that user to make the database password private or ...
-3. You can move the login details to /etc/notify-trigger-logger.ini to secure credentials.
+3. You can move the login details to `/etc/notify-trigger-logger.ini` to centralize credentials.
 4. A limited-privilege MySQL database user can be created with `GRANT SELECT, UPDATE on debug_log to 'debug_log'@'127.0.0.1';`
 
 ## Notes
@@ -38,7 +38,7 @@ There are minimal dependencies:
 3. MySQL has a limit of one trigger type, `INSERT` or `UPDATE`, per table. Additional `CREATE TRIGGER` statements will be skipped.
 4. The provided cron scripts send one alert per log entry, all at once. If your triggers log many rows, then you will get many alerts with the default scripts. There are several ways to customize the alerting behavior:
   * add a counter in the inner loop of the script and exit after say 10 alerts per run, or use `LIMIT 10` in the `SELECT` statement
-  * change the SET alerted='Y' WHERE id= to note= or alerted='N' to mark multiple items as already alerted
+  * change the `SET alerted='Y' WHERE id=` to `note=` or `alerted='N'` to mark multiple items as already alerted
   * do `SELECT id, ts, user, query, note, COUNT(*) cnt FROM debug_log WHERE alerted='N' GROUP BY note` to send one alert per note string with a count per note string.
 
 ## License
