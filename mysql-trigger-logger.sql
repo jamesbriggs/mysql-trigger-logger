@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS debug_log (
    `user` varchar(32) NOT NULL DEFAULT '',
    `note` varchar(1024) NOT NULL DEFAULT '',
    `alerted` char(1) NOT NULL DEFAULT 'N',
-   PRIMARY KEY (`id`)
+   PRIMARY KEY (`id`),
+   KEY `idx_alerted` (`alerted`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP PROCEDURE IF EXISTS p_log_query;
