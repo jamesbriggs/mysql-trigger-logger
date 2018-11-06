@@ -20,12 +20,12 @@ out=`mysql -N -s -h $host -u $user -p$pw -e 'select id, ts, user, query, note fr
 
 while IFS=$'\t' read -r -a row; do
     id="${row[0]}"
+    # echo $id
     if [[ "$id" == "" ]]; then
        break
     fi
 
     note="${row[4]}"
-    # echo $id
 
     mailx -s "$0: $id: $note" "$email" << EOD
 Time: ${row[1]}
