@@ -2,7 +2,7 @@
 -- Author: James Briggs, USA
 -- Date: 2018 11 05
 -- Env: MySQL
--- Licence: MIT
+-- License: MIT
 -- Usage: source mysql-trigger-logger.sql
 
 DROP TABLE IF EXISTS debug_log;
