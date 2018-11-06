@@ -20,9 +20,12 @@ The following cron scripts (tested on Linux) are provided to read the logging ta
 ## Notes
 
 1. Adding triggers to busy tables will impact performance since triggers are executed for all rows, even if your logic refers to a subset of rows.
-2. Trying other debugging methods first, like grepping SQL statements in source code, is recommended before installing triggers in your production database. This is a last resort to narrow down the source of a problem.
-3. MySQL has a limit of one trigger type per table.
-4. The provided cron scripts send one alert per log entry. If your triggers log many rows, then you will get many alerts with the default scripts.
+2. It's recommended to try simpler debugging methods first, like grepping SQL statements in source code or reading application logs, before installing triggers in your production database. This use of triggers is a last resort to narrow down the source of an intermittent  problem.
+3. MySQL has a limit of one trigger type, INSERT or UPDATE, per table. Additional CREATE TRIGGER statements will be skipped.
+4. The provided cron scripts send one alert per log entry. If your triggers log many rows, then you will get many alerts with the default scripts. There are several ways to customize the alerting behavior:
+ i. add a counter in the inner loop
+ ii. add a LIMIT 10 statement
+ iii. change the SET alerted='Y' WHERE clause from id= to note= or alerted='N'
 
 ## License
 
