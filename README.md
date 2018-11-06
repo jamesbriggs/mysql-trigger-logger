@@ -1,2 +1,19 @@
 # mysql-trigger-logger
-mysql-trigger-logger
+mysql-trigger-logger.sql demonstrates how to use MySQL triggers to log the timestamp, user and SQL for unexpected UPDATE or INSERT statements ("heisenbugs") to a logging table according to custom logic.
+
+## Getting Started
+
+1. Download mysql-trigger-logger.sql
+2. Editthe trigger definitions logic for your use case (you should not need to update the stored procedure)
+3. Test in your development environment first
+4. Ask your DBA to install it in other environments. Note that adding triggers will interfere with trigger-based schema change tools like pt-osc.
+
+## Notes
+
+1. Adding triggers to busy tables will impact performance since triggers are executed for all rows, even if your logic refers to a subset of rows.
+2. Trying other debugging methods, like grepping SQL statements in source code, is recommended before installing triggers in your production database. This is a last resort.
+3. MySQL has a limit of one trigger type per table.
+
+## License
+
+MIT License
