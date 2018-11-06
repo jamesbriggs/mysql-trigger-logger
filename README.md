@@ -7,7 +7,7 @@ mysql-trigger-logger.sql demonstrates how to use MySQL triggers to log the times
 2. Edit the trigger definitions logic for your use case (you should not need to update the stored procedure)
 3. Test in your development environment first
 4. Ask your DBA to install it in other environments. Note that adding triggers will interfere with trigger-based schema change tools like pt-osc.
-5. Matching SQL queries will be inserted into the debug_log table. Either check that table peridically manually, or use one of the provided cron jobs like notify-trigger-logger.pl to send alert emails automatically.
+5. Matching SQL queries will be inserted into the debug_log table. Either check that table periodically manually, or use one of the provided cron jobs like notify-trigger-logger.pl to send alert emails automatically.
 
 ## Notes
 
