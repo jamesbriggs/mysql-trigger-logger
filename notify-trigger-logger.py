@@ -9,6 +9,7 @@
 
 import MySQLdb
 import os
+import time
 
 mailer = "/usr/sbin/sendmail" # mailer location
 to = "me@apple.com"
@@ -44,6 +45,7 @@ Query:
     sql2 = "update debug_log set alerted='Y' where id = %s" % id
     cursor2.execute(sql2)
     db.commit()
+    time.sleep(1)
  
 db.close()
 

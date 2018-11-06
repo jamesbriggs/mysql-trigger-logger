@@ -49,6 +49,8 @@ EOD
       close X or die $!;
 
       my $rv2 = $sth2->execute($id);
+
+      sleep 1;
    }
 
    $dbh->disconnect();
