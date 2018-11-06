@@ -3,7 +3,7 @@
 -- Date: 2018 11 05
 -- Env: MySQL
 -- License: MIT
--- Usage: source mysql-trigger-logger.sql
+-- Usage: edit after line 22, then: mysql> source mysql-trigger-logger.sql
 
 DROP TABLE IF EXISTS debug_log;
 
@@ -57,11 +57,17 @@ END
 |
 DELIMITER ;
 
+-- Sample DBA management commands:
+
+-- See if the procedure is installed
 SHOW PROCEDURE STATUS;
 
+-- See if the triggers are installed
 SHOW TRIGGERS;
 
+-- See if any rows logged by triggers
 SELECT * FROM debug_log;
 
+-- Prune the log table
 TRUNCATE TABLE debug_log;
 
