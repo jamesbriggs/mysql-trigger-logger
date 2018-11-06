@@ -10,6 +10,7 @@
 import MySQLdb
 import os
 import time
+import sys
 
 mailer = "/usr/sbin/sendmail" # mailer location
 to = "me@apple.com"
@@ -40,6 +41,9 @@ Query:
     p = os.popen("%s -t -i" % mailer, "w")
     p.write(message)
     status = p.close()
+    if status is not None and status >> 8:
+       print("error: on call to %s status %s" % (mailer, status))
+       sys.exit(1)
 
     cursor2 = db.cursor() 
     sql2 = "update debug_log set alerted='Y' where id = %s" % id
@@ -48,4 +52,6 @@ Query:
     time.sleep(1)
  
 db.close()
+
+sys.exit(0)
 
