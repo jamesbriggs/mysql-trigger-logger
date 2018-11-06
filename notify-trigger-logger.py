@@ -11,16 +11,15 @@ import MySQLdb
 import os
 
 mailer = "/usr/sbin/sendmail" # mailer location
-
 to = "me@apple.com"
 
-db = MySQLdb.connect("localhost","root","password","db")
+db = MySQLdb.connect("localhost", "root", "password", "db")
  
 cursor = db.cursor() 
- 
 sql = "select id, ts, user, query, note from debug_log where alerted='N'"
 cursor.execute(sql)
 results = cursor.fetchall() 
+
 for row in results:
     id = row[0]
     # print id
@@ -42,7 +41,7 @@ Query:
     status = p.close()
 
     cursor2 = db.cursor() 
-    sql2 = "update debug_log set alerted='Y' where id = %s" % (id)
+    sql2 = "update debug_log set alerted='Y' where id = %s" % id
     cursor2.execute(sql2)
     db.commit()
  
