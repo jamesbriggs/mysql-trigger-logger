@@ -48,10 +48,11 @@ There are minimal dependencies:
 ```text
 From: root@localhost
 To: me@apple.com
+Date: 2018-11-05 17:59
 Subject: notify-trigger-logger.pl: 1: unexpected value in client.intervals
 
 Time: 2018-11-05 17:58:53
-User: debug_log@127.0.0.1
+User: prod@127.0.0.1
 Query:
 INSERT INTO client SET intervals = 15 WHERE id = 1;
 ```
