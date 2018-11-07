@@ -58,7 +58,7 @@ Query:
 INSERT INTO client SET intervals = 15 WHERE id = 1;
 ```
 
-## debug_log Schema
+## Schema for debug_log
 
 ```text
 CREATE TABLE `debug_log` (
@@ -70,7 +70,7 @@ CREATE TABLE `debug_log` (
   `alerted` char(1) NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`),
   KEY `idx_alerted` (`alerted`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ```
 
 ## License
