@@ -8,6 +8,7 @@
 3. Test in your development environment first
 4. Ask your DBA to install it in other environments. Note that adding triggers will interfere with trigger-based schema change tools like `pt-online-schema-change`
 5. Matching SQL queries will be inserted into the `debug_log` table. Either check that table periodically manually, or use one of the provided cron jobs like `notify-trigger-logger.pl` to send alert emails automatically.
+6. Don't forget to disable the trigger(s) when you're done!
 
 ## Cron Jobs
 
@@ -55,6 +56,21 @@ Time: 2018-11-05 17:58:53
 User: prod@127.0.0.1
 Query:
 INSERT INTO client SET intervals = 15 WHERE id = 1;
+```
+
+## debug_log Schema
+
+```text
+CREATE TABLE `debug_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `query` varchar(1024) NOT NULL DEFAULT '',
+  `user` varchar(32) NOT NULL DEFAULT '',
+  `note` varchar(1024) NOT NULL DEFAULT '',
+  `alerted` char(1) NOT NULL DEFAULT 'N',
+  PRIMARY KEY (`id`),
+  KEY `idx_alerted` (`alerted`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 ```
 
 ## License
