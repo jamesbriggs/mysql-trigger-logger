@@ -30,7 +30,8 @@ There are minimal dependencies:
 2. The scripts can be run as a non-privileged OS user and made read-only to that user to make the database password private or ...
 3. You can move the login details to `/etc/notify-trigger-logger.ini` to centralize credentials.
 4. A limited-privilege MySQL database user can be created with `GRANT SELECT, UPDATE on debug_log to 'debug_log'@'127.0.0.1';`
-5. The email alerts send raw SQL statements, so those could contain PII or PHI which could be excluded or masked.
+5. The default email alerts contain raw SQL statements, which could contain PII or PHI. You may want to omit or mask the queries for compliance reasons.
+6. If HTML can be injected from an end-user, then you should use the Perl or Python scripts and escape the query text. bash scripts are impractical to harden against unknown input strings.
 
 ## Notes
 
@@ -41,6 +42,19 @@ There are minimal dependencies:
   * add a counter in the inner loop of the script and exit after say 10 alerts per run, or use `LIMIT 10` in the `SELECT` statement
   * change the `SET alerted='Y' WHERE id=` to `note=` or `alerted='N'` to mark multiple items as already alerted
   * do `SELECT id, ts, user, query, note, COUNT(*) cnt FROM debug_log WHERE alerted='N' GROUP BY note` to send one alert email per note string with a count per note string.
+
+## Email Sample
+
+```text
+From: root@localhost
+To: me@apple.com
+Subject: notify-trigger-logger.pl: 1: unexpected value in client.intervals
+
+Time: 2018-11-05 17:58:53
+User: debug_log@127.0.0.1
+Query:
+INSERT INTO ...
+```
 
 ## License
 
