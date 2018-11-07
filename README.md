@@ -43,7 +43,7 @@ There are minimal dependencies:
   * change the `SET alerted='Y' WHERE id=` to `note=` or `alerted='N'` to mark multiple items as already alerted
   * do `SELECT id, ts, user, query, note, COUNT(*) cnt FROM debug_log WHERE alerted='N' GROUP BY note` to send one alert email per note string with a count per note string.
 
-## Email Sample
+## Alert Email Sample
 
 ```text
 From: root@localhost
@@ -53,7 +53,7 @@ Subject: notify-trigger-logger.pl: 1: unexpected value in client.intervals
 Time: 2018-11-05 17:58:53
 User: debug_log@127.0.0.1
 Query:
-INSERT INTO ...
+INSERT INTO client SET intervals = 15 WHERE id = 1;
 ```
 
 ## License
