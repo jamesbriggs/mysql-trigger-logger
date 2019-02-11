@@ -2,7 +2,7 @@
 
 # Program: notify-trigger-logger.rb
 # Purpose: read debug_log table and send emails for rows with alerted="N"
-# Env: ruby
+# Env: ruby 1.8
 # Author: James Briggs, USA
 # Date: 2019 02 10
 # Usage: ./notify-trigger-logger.rb
@@ -42,6 +42,8 @@ end
    dbh = Mysql.new(host, user, pass, db)
    res = dbh.query("select id, ts, user, query, note from debug_log where alerted='N'")
    res.each_hash do |row|
+      next if row['id'] < 1
+
       body = <<EOD
       Time: #{ row['ts'] }
       User: #{ row['user'] }
@@ -52,7 +54,7 @@ EOD
       send_email email_to, :body => body, :subject => "mysql-trigger-debugger: #{ row['id'] }: #{ row['note'] }"
 
       if dbh
-         res2 = dbh.query("update debug_log set alerted='Y' where id=#{ row['id'] }");
+         res2 = dbh.query("update debug_log set alerted='Y' where id=#{ row['id'] }")
       end
    end
 
