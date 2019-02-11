@@ -12,11 +12,13 @@ require "rubygems"
 require 'mysql'
 require 'net/smtp'
 
-   host='localhost'
-   user='root'
-   pass=''
+   # database settings
+   db_host='localhost'
+   db_user='root'
+   db_pass=''
    db='mydb'
 
+   # email settings
    email_to='example@example.com'
 
 def send_email(to, opts={})
@@ -40,7 +42,7 @@ END_OF_MESSAGE
 end
 
    begin
-      dbh = Mysql.new(host, user, pass, db)
+      dbh = Mysql.new(db_host, db_user, db_pass, db)
    rescue Mysql::Error => e
      puts "Error message: #{e.error}" + ", Error code: #{e.errno}"
    ensure
