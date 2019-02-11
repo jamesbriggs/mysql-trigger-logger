@@ -57,6 +57,7 @@ end
    n = 0
    res.each_hash do |row|
       next if row['id'].to_i < 1
+      break if n >= 10
 
       n = n + 1
 
@@ -67,13 +68,13 @@ end
       #{ row['query'] }
 EOD
 
-      send_email email_to, :body => body, :subject => "mysql-trigger-debugger: #{ row['id'] }: #{ row['note'] }"
-
-      STDERR.puts("notice: sending email for: #{ row['note'] }") if DEBUG
-
       if dbh
          res2 = dbh.query("update debug_log set alerted='Y' where id=#{ row['id'] }")
       end
+
+      send_email email_to, :body => body, :subject => "mysql-trigger-debugger: #{ row['id'] }: #{ row['note'] }"
+
+      STDERR.puts("notice: sending email for: #{ row['note'] }") if DEBUG
    end
 
    dbh.close if dbh
