@@ -49,7 +49,7 @@ end
       #{ row['query'] }
 EOD
 
-      send_email email_to, :body => body, :subjecft => "mysql-trigger-debugger: #{ row['id'] }: #{ row['note'] }"
+      send_email email_to, :body => body, :subject => "mysql-trigger-debugger: #{ row['id'] }: #{ row['note'] }"
 
       if dbh
          res2 = dbh.query("update debug_log set alerted='Y' where id=#{ row['id'] }");
