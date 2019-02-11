@@ -47,9 +47,9 @@ end
    begin
       dbh = Mysql.new(db_host, db_user, db_pass, db)
    rescue Mysql::Error => e
-     STDERR.puts "error: #{e.error}" + ", code: #{e.errno}"
-     dbh.close if dbh
-     exit(1)
+      STDERR.puts "error: #{e.error}" + ", code: #{e.errno}"
+      dbh.close if dbh
+      exit(1)
    ensure
    end
 
