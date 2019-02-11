@@ -12,6 +12,8 @@ require "rubygems"
 require 'mysql'
 require 'net/smtp'
 
+   DEBUG=true
+
    # database settings
    db_host='localhost'
    db_user='root'
@@ -19,6 +21,7 @@ require 'net/smtp'
    db='mydb'
 
    # email settings
+   #email_to='example@example.com'
    email_to='example@example.com'
 
 def send_email(to, opts={})
@@ -44,15 +47,18 @@ end
    begin
       dbh = Mysql.new(db_host, db_user, db_pass, db)
    rescue Mysql::Error => e
-     puts "Error message: #{e.error}" + ", Error code: #{e.errno}"
-   ensure
+     STDERR.puts "error: #{e.error}" + ", code: #{e.errno}"
      dbh.close if dbh
      exit(1)
+   ensure
    end
 
    res = dbh.query("select id, ts, user, query, note from debug_log where alerted='N'")
+   n = 0
    res.each_hash do |row|
-      next if row['id'] < 1
+      next if row['id'].to_i < 1
+
+      n = n + 1
 
       body = <<EOD
       Time: #{ row['ts'] }
@@ -63,6 +69,8 @@ EOD
 
       send_email email_to, :body => body, :subject => "mysql-trigger-debugger: #{ row['id'] }: #{ row['note'] }"
 
+      STDERR.puts("notice: sending email for: #{ row['note'] }") if DEBUG
+
       if dbh
          res2 = dbh.query("update debug_log set alerted='Y' where id=#{ row['id'] }")
       end
@@ -70,4 +78,9 @@ EOD
 
    dbh.close if dbh
 
+   if DEBUG
+      STDERR.puts("notice: no alertable rows found") if n == 0
+   end
+
    exit(0)
+
