@@ -39,7 +39,15 @@ END_OF_MESSAGE
   end
 end
 
-   dbh = Mysql.new(host, user, pass, db)
+   begin
+      dbh = Mysql.new(host, user, pass, db)
+   rescue Mysql::Error => e
+     puts "Error message: #{e.error}" + ", Error code: #{e.errno}"
+   ensure
+     dbh.close if dbh
+     exit(1)
+   end
+
    res = dbh.query("select id, ts, user, query, note from debug_log where alerted='N'")
    res.each_hash do |row|
       next if row['id'] < 1
@@ -60,3 +68,4 @@ EOD
 
    dbh.close if dbh
 
+   exit(0)
