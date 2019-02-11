@@ -16,7 +16,8 @@ The following cron scripts (tested on Linux) are provided to read the logging ta
 
 1. `notify-trigger-logger.pl` (written in Perl)
 2. `notify-trigger-logger.py` (written in Python)
-3. `notify-trigger-logger.sh` (written in bash. avoid embedded tabs in the query and note columns for best results.)
+2. `notify-trigger-logger.rb` (written in Ruby)
+4. `notify-trigger-logger.sh` (written in bash. avoid embedded tabs in the query and note columns for best results.)
 
 There are minimal dependencies:
 
